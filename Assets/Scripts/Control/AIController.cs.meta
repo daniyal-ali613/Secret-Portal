@@ -1,0 +1,17 @@
+<<<<<<< Updated upstream:Assets/Scripts/PlayerHealth.cs.meta
+version https://git-lfs.github.com/spec/v1
+oid sha256:1ecbfe410f00f06ec56a81096583651d0f3fbf908dc17b1ece6d27061d8261a0
+size 243
+=======
+fileFormatVersion: 2
+guid: d988c3ed3f207ae419fd55794e8b8889
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+>>>>>>> Stashed changes:Assets/Scripts/Control/AIController.cs.meta

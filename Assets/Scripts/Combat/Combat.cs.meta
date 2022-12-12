@@ -1,0 +1,17 @@
+<<<<<<< Updated upstream:Assets/Scripts/EnemyAttack.cs.meta
+version https://git-lfs.github.com/spec/v1
+oid sha256:3cf8c12509ac42da0662847fa5324697e18cec4affdf660388872a9342a0eead
+size 243
+=======
+fileFormatVersion: 2
+guid: 3a10fc7bba5cfb2418ffb0776e3a55db
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+>>>>>>> Stashed changes:Assets/Scripts/Combat/Combat.cs.meta
