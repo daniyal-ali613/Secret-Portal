@@ -10,6 +10,7 @@ namespace RPG.Core
     {
         [SerializeField] float healthPoints = 100f;
         [SerializeField] GameObject gameLostText;
+        [SerializeField] GameObject enemyGun;
 
         bool isDead = false;
 
@@ -21,8 +22,8 @@ namespace RPG.Core
 
         public void PlayerTakeDamage(float damage)
         {
-            healthPoints = Mathf.Max(healthPoints - damage, 0);
-            if (healthPoints == 0)
+            this.healthPoints = Mathf.Max(this.healthPoints - damage, 0);
+            if (this.healthPoints <= 0)
             {
                 StartCoroutine(PlayerDie());
             }
@@ -30,8 +31,8 @@ namespace RPG.Core
 
         public void EnemyTakeDamage(float damage)
         {
-            healthPoints = Mathf.Max(healthPoints - damage, 0);
-            if (healthPoints == 0)
+            this.healthPoints = Mathf.Max(this.healthPoints - damage, 0);
+            if (this.healthPoints <= 0)
             {
                 EnemyDie();
             }
@@ -43,6 +44,7 @@ namespace RPG.Core
             isDead = true;
             GetComponent<ActionSchedular>().CancelCurrentAction();
             GetComponent<Animator>().SetTrigger("Die");
+            enemyGun.SetActive(false);
         }
 
         IEnumerator PlayerDie()

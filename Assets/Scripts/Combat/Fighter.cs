@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using RPG.Movement;
 using RPG.Core;
 using UnityEngine;
+using System;
 
 namespace RPG.Combat
 {
@@ -15,6 +16,7 @@ namespace RPG.Combat
         [SerializeField] float damage;
         [SerializeField] GameObject hitEffect;
         [SerializeField] AudioClip shooting;
+        [SerializeField] Camera fpsCamera;
         Coroutine trigger;
         LightingSettings settings;
         bool check;
@@ -39,18 +41,17 @@ namespace RPG.Combat
             if (!GetIsInRange())
             {
                 GetComponent<Mover>().MoveTo(target.position);
-
-            }
-
-            else
-            {
-                GetComponent<Mover>().Cancel();
-
                 if (!health.IsDead())
                 {
                     AttackBehaviour();
                 }
             }
+
+            else
+            {
+                GetComponent<Mover>().Cancel();
+            }
+
         }
 
         private bool GetIsInRange()
@@ -77,7 +78,6 @@ namespace RPG.Combat
             {
                 Debug.Log("Started");
                 trigger = StartCoroutine(TriggerAttack());
-
             }
 
         }
@@ -124,6 +124,7 @@ namespace RPG.Combat
                 return;
             }
         }
+
 
 
         public void Attack(GameObject combatTarget)

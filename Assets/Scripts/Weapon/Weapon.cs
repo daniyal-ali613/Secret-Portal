@@ -26,7 +26,8 @@ public class Weapon : MonoBehaviour
 
     private void Shoot()
     {
-        if (ammoSlot.GetCurrentAmmo(ammoType) > 0) {
+        if (ammoSlot.GetCurrentAmmo(ammoType) > 0)
+        {
 
             PlayMuzzleFlash();
             Process();
@@ -42,10 +43,13 @@ public class Weapon : MonoBehaviour
     private void Process()
     {
         RaycastHit hit;
-        if(Physics.Raycast(FPCamera.transform.position, FPCamera.transform.forward, out hit, range))
+        if (Physics.Raycast(FPCamera.transform.position, FPCamera.transform.forward, out hit, range))
         {
 
             Debug.Log("I hit this thing: " + hit.transform.name);
+
+            CreateHitImpact(hit);
+
 
             Health target = hit.transform.GetComponent<Health>();
             if (target == null) return;
@@ -57,5 +61,11 @@ public class Weapon : MonoBehaviour
         {
             return;
         }
+    }
+
+    private void CreateHitImpact(RaycastHit hit)
+    {
+        GameObject impact = Instantiate(hitEffect, hit.transform.position, Quaternion.LookRotation(hit.normal));
+        Destroy(impact, 0.1f);
     }
 }
