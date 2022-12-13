@@ -10,7 +10,6 @@ namespace RPG.Core
     {
         [SerializeField] float healthPoints = 100f;
         [SerializeField] GameObject gameLostText;
-        [SerializeField] GameObject enemyGun;
 
         bool isDead = false;
 
@@ -44,7 +43,6 @@ namespace RPG.Core
             isDead = true;
             GetComponent<ActionSchedular>().CancelCurrentAction();
             GetComponent<Animator>().SetTrigger("Die");
-            enemyGun.SetActive(false);
         }
 
         IEnumerator PlayerDie()
