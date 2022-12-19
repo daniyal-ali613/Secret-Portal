@@ -1,9 +1,49 @@
 fileFormatVersion: 2
-guid: b2b95e4970664184d9bca937c136003e
+guid: 59ce74cfee58ced40a2e8bd67685d68a
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Krum
+    second: {fileID: 2100000, guid: 5f138460c2ce0484385a0545bf6ce9b0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: besi Kuning 1
+    second: {fileID: 2100000, guid: fdb46a1f8be80c845a5dc91aefd5edbe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: besi abu 1
+    second: {fileID: 2100000, guid: 28ca9d5267590bc47a8d609909ae3717, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: besi hitam 1
+    second: {fileID: 2100000, guid: bd075709400db91459d17d0fda54088b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: besi putih 1
+    second: {fileID: 2100000, guid: 53c8b2456f5e9be489c0694f17b57cd4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cahaya_
+    second: {fileID: 2100000, guid: 040a1f547378246429d3b30bc4fac6a9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: kaca
+    second: {fileID: 2100000, guid: 9ae57751111a5b54f8a2f11804de89ac, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lampu biru 1
+    second: {fileID: 2100000, guid: ce337c329790c0b4e8ec0b5e543d1044, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

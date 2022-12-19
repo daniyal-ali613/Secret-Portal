@@ -12,11 +12,14 @@ namespace RPG.Combat
         [SerializeField] float weaponRange = 2f;
         [SerializeField] Transform target;
         [SerializeField] ParticleSystem muzzleFlash;
+        [SerializeField] GameObject gun;
         [SerializeField] float range;
         [SerializeField] float damage;
         [SerializeField] GameObject hitEffect;
         [SerializeField] AudioClip shooting;
         [SerializeField] Camera fpsCamera;
+
+        [SerializeField] float shootingRange;
         Coroutine trigger;
         LightingSettings settings;
         bool check;
@@ -35,16 +38,22 @@ namespace RPG.Combat
 
         void Update()
         {
+            transform.LookAt(target.transform);
+            if (this.health.IsDead())
+            {
+                gun.SetActive(false);
+            }
 
             if (target == null) return;
 
             if (!GetIsInRange())
             {
+
+
                 GetComponent<Mover>().MoveTo(target.position);
-                if (!health.IsDead())
-                {
-                    AttackBehaviour();
-                }
+                AttackBehaviour();
+
+
             }
 
             else
@@ -61,6 +70,13 @@ namespace RPG.Combat
 
         }
 
+        private bool StartAttacking()
+        {
+
+            return Vector3.Distance(transform.position, target.position) < shootingRange;
+
+        }
+
         public bool CanAttack(GameObject combatTarget)
         {
 
@@ -71,8 +87,6 @@ namespace RPG.Combat
 
         private void AttackBehaviour()
         {
-            transform.LookAt(target.transform);
-
 
             if (running == false)
             {
@@ -103,7 +117,7 @@ namespace RPG.Combat
         private void PlayMuzzleFlash()
         {
             muzzleFlash.Play();
-            AudioSource.PlayClipAtPoint(shooting, Camera.main.transform.position);
+            AudioSource.PlayClipAtPoint(shooting, Camera.main.transform.position, 0.25f);
         }
 
         private void Process()
