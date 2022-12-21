@@ -19,12 +19,15 @@ namespace RPG.Combat
         [SerializeField] AudioClip shooting;
         [SerializeField] Camera fpsCamera;
 
+
         [SerializeField] float shootingRange;
         Coroutine trigger;
         LightingSettings settings;
         bool check;
         public Health targetPlayer;
         Health health;
+        Vector3 distanceToPlayer;
+      
 
         bool running;
 
@@ -38,7 +41,9 @@ namespace RPG.Combat
 
         void Update()
         {
-            transform.LookAt(target.transform);
+
+            LookAtPlayer();
+
             if (this.health.IsDead())
             {
                 gun.SetActive(false);
@@ -49,7 +54,6 @@ namespace RPG.Combat
             if (!GetIsInRange())
             {
 
-
                 GetComponent<Mover>().MoveTo(target.position);
                 AttackBehaviour();
 
@@ -59,6 +63,15 @@ namespace RPG.Combat
             else
             {
                 GetComponent<Mover>().Cancel();
+            }
+
+        }
+
+        private void LookAtPlayer()
+        {
+            if (Vector3.Distance(transform.position, target.position) > 3.0f)
+            {
+                transform.LookAt(target.transform);
             }
 
         }
