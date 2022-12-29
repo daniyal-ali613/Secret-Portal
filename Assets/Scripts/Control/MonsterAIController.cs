@@ -35,7 +35,6 @@ namespace RPG.Control
             mover = GetComponent<Mover>();
             navMeshAgent = GetComponent<NavMeshAgent>();
             StartCoroutine(Growling());
-            GetComponent<AudioSource>().Play();
         }
 
 
@@ -49,7 +48,6 @@ namespace RPG.Control
             {
 
                 AttackBehaviour();
-                GetComponent<AudioSource>().Stop();
 
             }
 
@@ -57,7 +55,6 @@ namespace RPG.Control
             {
 
                 PatrolBehaviour();
-                GetComponent<AudioSource>().Play();
             }
 
 

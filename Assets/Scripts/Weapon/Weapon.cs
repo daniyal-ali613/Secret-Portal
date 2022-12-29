@@ -20,7 +20,6 @@ public class Weapon : MonoBehaviour
         {
             Shoot();
             AudioSource.PlayClipAtPoint(shooting, Camera.main.transform.position);
-
         }
     }
 

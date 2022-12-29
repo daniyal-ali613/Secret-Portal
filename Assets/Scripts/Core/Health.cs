@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
 
 
@@ -57,7 +58,7 @@ namespace RPG.Core
             Time.timeScale = 0;
         }
 
-        public float GetPlayerHealth()
+        public float GetHealth()
         {
             return healthPoints;
         }

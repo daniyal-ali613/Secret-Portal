@@ -27,7 +27,7 @@ namespace RPG.Combat
         public Health targetPlayer;
         Health health;
         Vector3 distanceToPlayer;
-      
+
 
         bool running;
 
@@ -64,6 +64,8 @@ namespace RPG.Combat
             {
                 GetComponent<Mover>().Cancel();
             }
+
+
 
         }
 
@@ -106,6 +108,11 @@ namespace RPG.Combat
                 Debug.Log("Started");
                 trigger = StartCoroutine(TriggerAttack());
             }
+
+        }
+
+        public void CombatMode()
+        {
 
         }
 

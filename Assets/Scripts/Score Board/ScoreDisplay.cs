@@ -20,9 +20,9 @@ namespace RPG.GameInfo
         // Update is called once per frame
         void Update()
         {
-            playerHealth.text = health.GetPlayerHealth().ToString();
+            playerHealth.text = health.GetHealth().ToString();
 
-            if (health.GetPlayerHealth() <= 0)
+            if (health.GetHealth() <= 0)
             {
                 menu.SetActive(true);
             }

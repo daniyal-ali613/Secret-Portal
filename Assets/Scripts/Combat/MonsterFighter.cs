@@ -13,11 +13,15 @@ namespace RPG.Combat
         [SerializeField] Transform target;
         [SerializeField] float range;
         [SerializeField] float damage;
-        Coroutine trigger;
+        [SerializeField] AudioClip punchSound;
+        [SerializeField] AudioClip hurtSound;
+        public Animator playerAnimator;
         LightingSettings settings;
+        Animator animator;
         bool check;
         public Health targetPlayer;
         Health health;
+        bool collided;
 
         bool running;
 
@@ -25,9 +29,10 @@ namespace RPG.Combat
         void Start()
         {
             health = GetComponent<Health>();
+            animator = GetComponent<Animator>();
             check = false;
             running = false;
-
+            collided = false;
         }
 
         void Update()
@@ -50,13 +55,21 @@ namespace RPG.Combat
 
                 GetComponent<Mover>().Cancel();
             }
+
+            LookAtPlayer();
+        }
+
+        private void LookAtPlayer()
+        {
+            if (Vector3.Distance(transform.position, target.position) > 3.0f)
+            {
+                transform.LookAt(target.transform);
+            }
         }
 
         private bool GetIsInRange()
         {
-
             return Vector3.Distance(transform.position, target.position) < weaponRange;
-
         }
 
         public bool CanAttack(GameObject combatTarget)
@@ -69,42 +82,9 @@ namespace RPG.Combat
 
         private void AttackBehaviour()
         {
-            transform.LookAt(target.transform);
-
-
-            if (running == false)
-            {
-                Debug.Log("Started");
-                trigger = StartCoroutine(TriggerAttack());
-
-            }
-
+            animator.SetTrigger("attack");
 
         }
-
-        IEnumerator TriggerAttack()
-        {
-            running = true;
-
-            do
-            {
-                yield return new WaitForSeconds(0.5f);
-                Trigger();
-            } while (GetIsInRange());
-
-            running = false;
-
-            Debug.Log("Ended");
-        }
-
-
-
-
-        private void Trigger()
-        {
-            GetComponent<Animator>().SetTrigger("attack");
-        }
-
 
         public void Attack(GameObject combatTarget)
         {
@@ -112,11 +92,35 @@ namespace RPG.Combat
             target = combatTarget.transform;
         }
 
+        public void OnPunch()
+        {
+            if (collided == true)
+            {
+                playerAnimator.SetTrigger("hurt");
+                AudioSource.PlayClipAtPoint(punchSound, Camera.main.transform.position);
+                AudioSource.PlayClipAtPoint(hurtSound, Camera.main.transform.position);
+                health.PlayerTakeDamage(1);
+            }
 
+        }
 
         public void Cancel()
         {
             target = null;
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.gameObject.tag == "Player")
+            {
+                collided = true;
+            }
+
+            else
+            {
+                collided = false;
+            }
+
         }
     }
 
