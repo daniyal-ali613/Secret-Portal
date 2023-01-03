@@ -885,9 +885,9 @@ RectTransform:
   m_Father: {fileID: 1828683327}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 979.6, y: 103}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -14, y: 103}
   m_SizeDelta: {x: 219.1333, y: -10.0973}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &83367516
@@ -1168,10 +1168,10 @@ RectTransform:
   m_Father: {fileID: 1828683327}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: -230.93628}
-  m_SizeDelta: {x: -0.0001, y: -460.6151}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 6.8287, y: -348.49994}
+  m_SizeDelta: {x: 1540.386, y: -695.7499}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &87020463
 MonoBehaviour:
@@ -12789,7 +12789,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 154, y: 70}
+  m_AnchoredPosition: {x: 154, y: 73}
   m_SizeDelta: {x: 223.054, y: 55.7634}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &282421164
@@ -19320,17 +19320,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88067fe9f428b6b429a3d7462b1f5100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponRange: 6
+  weaponRange: 15
   target: {fileID: 1857506136}
   muzzleFlash: {fileID: 1447738135}
-  gun: {fileID: 0}
-  range: 500
+  range: 10
   damage: 1
   hitEffect: {fileID: 1766814854480755888, guid: c0afdbdb1803a3242974df91a270faed,
     type: 3}
   shooting: {fileID: 8300000, guid: cdc13772333c96b468dfe6fb7d898673, type: 3}
   fpsCamera: {fileID: 0}
-  shootingRange: 10
+  shootingRange: 5
   targetPlayer: {fileID: 1857506137}
 --- !u!195 &462692475
 NavMeshAgent:
@@ -19395,6 +19394,7 @@ MonoBehaviour:
   WayPointDwellTime: 3
   WayPointTolerence: 1
   patrolPath: {fileID: 462692471}
+  enemies: []
 --- !u!54 &462692479
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -31610,17 +31610,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88067fe9f428b6b429a3d7462b1f5100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponRange: 6
+  weaponRange: 15
   target: {fileID: 1857506136}
   muzzleFlash: {fileID: 676757921}
-  gun: {fileID: 0}
-  range: 500
+  range: 10
   damage: 1
   hitEffect: {fileID: 1766814854480755888, guid: c0afdbdb1803a3242974df91a270faed,
     type: 3}
   shooting: {fileID: 8300000, guid: cdc13772333c96b468dfe6fb7d898673, type: 3}
   fpsCamera: {fileID: 0}
-  shootingRange: 10
+  shootingRange: 5
   targetPlayer: {fileID: 1857506137}
 --- !u!195 &693785641
 NavMeshAgent:
@@ -31685,6 +31684,7 @@ MonoBehaviour:
   WayPointDwellTime: 3
   WayPointTolerence: 1
   patrolPath: {fileID: 693785637}
+  enemies: []
 --- !u!54 &693785645
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -43129,7 +43129,6 @@ GameObject:
   - component: {fileID: 828445255}
   - component: {fileID: 828445258}
   - component: {fileID: 828445257}
-  - component: {fileID: 828445256}
   m_Layer: 5
   m_Name: Health (2)
   m_TagString: Untagged
@@ -43157,20 +43156,6 @@ RectTransform:
   m_AnchoredPosition: {x: 235, y: 71}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &828445256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 828445254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b609534a3adc90478ca6c0d13d5bd32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 1538068531}
-  health: {fileID: 1857506137}
 --- !u!114 &828445257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43347,17 +43332,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88067fe9f428b6b429a3d7462b1f5100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponRange: 6
+  weaponRange: 15
   target: {fileID: 1857506136}
   muzzleFlash: {fileID: 431457561}
-  gun: {fileID: 1842237985}
-  range: 500
+  range: 10
   damage: 1
   hitEffect: {fileID: 1766814854480755888, guid: c0afdbdb1803a3242974df91a270faed,
     type: 3}
   shooting: {fileID: 8300000, guid: cdc13772333c96b468dfe6fb7d898673, type: 3}
   fpsCamera: {fileID: 0}
-  shootingRange: 10
+  shootingRange: 5
   targetPlayer: {fileID: 1857506137}
 --- !u!195 &837830527
 NavMeshAgent:
@@ -43422,6 +43406,7 @@ MonoBehaviour:
   WayPointDwellTime: 3
   WayPointTolerence: 1
   patrolPath: {fileID: 837830523}
+  enemies: []
 --- !u!54 &837830531
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -44073,17 +44058,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88067fe9f428b6b429a3d7462b1f5100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponRange: 6
+  weaponRange: 15
   target: {fileID: 1857506136}
   muzzleFlash: {fileID: 919144355}
-  gun: {fileID: 374961936}
-  range: 500
+  range: 10
   damage: 1
   hitEffect: {fileID: 1766814854480755888, guid: c0afdbdb1803a3242974df91a270faed,
     type: 3}
   shooting: {fileID: 8300000, guid: cdc13772333c96b468dfe6fb7d898673, type: 3}
   fpsCamera: {fileID: 0}
-  shootingRange: 10
+  shootingRange: 5
   targetPlayer: {fileID: 1857506137}
 --- !u!195 &911682955
 NavMeshAgent:
@@ -44148,6 +44132,7 @@ MonoBehaviour:
   WayPointDwellTime: 3
   WayPointTolerence: 1
   patrolPath: {fileID: 911682951}
+  enemies: []
 --- !u!54 &911682959
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -49650,17 +49635,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88067fe9f428b6b429a3d7462b1f5100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponRange: 6
+  weaponRange: 15
   target: {fileID: 1857506136}
   muzzleFlash: {fileID: 760857409}
-  gun: {fileID: 0}
-  range: 500
+  range: 10
   damage: 1
   hitEffect: {fileID: 1766814854480755888, guid: c0afdbdb1803a3242974df91a270faed,
     type: 3}
   shooting: {fileID: 8300000, guid: cdc13772333c96b468dfe6fb7d898673, type: 3}
   fpsCamera: {fileID: 0}
-  shootingRange: 10
+  shootingRange: 5
   targetPlayer: {fileID: 1857506137}
 --- !u!195 &980046686
 NavMeshAgent:
@@ -49725,6 +49709,7 @@ MonoBehaviour:
   WayPointDwellTime: 3
   WayPointTolerence: 1
   patrolPath: {fileID: 980046682}
+  enemies: []
 --- !u!54 &980046690
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -52215,7 +52200,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 137, y: 48}
+  m_AnchoredPosition: {x: 137, y: 51}
   m_SizeDelta: {x: 219.1333, y: -10.0973}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1187677369
@@ -73629,8 +73614,8 @@ Canvas:
   m_GameObject: {fileID: 1828683323}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
-  m_Camera: {fileID: 0}
+  m_RenderMode: 0
+  m_Camera: {fileID: 1581997405548593659}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -80830,17 +80815,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88067fe9f428b6b429a3d7462b1f5100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponRange: 6
+  weaponRange: 15
   target: {fileID: 1857506136}
   muzzleFlash: {fileID: 1928037279}
-  gun: {fileID: 0}
-  range: 500
+  range: 10
   damage: 1
   hitEffect: {fileID: 1766814854480755888, guid: c0afdbdb1803a3242974df91a270faed,
     type: 3}
   shooting: {fileID: 8300000, guid: cdc13772333c96b468dfe6fb7d898673, type: 3}
   fpsCamera: {fileID: 0}
-  shootingRange: 10
+  shootingRange: 5
   targetPlayer: {fileID: 1857506137}
 --- !u!195 &1992877324
 NavMeshAgent:
@@ -80905,6 +80889,7 @@ MonoBehaviour:
   WayPointDwellTime: 3
   WayPointTolerence: 1
   patrolPath: {fileID: 1992877320}
+  enemies: []
 --- !u!54 &1992877328
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -86196,7 +86181,6 @@ GameObject:
   - component: {fileID: 2054525967}
   - component: {fileID: 2054525970}
   - component: {fileID: 2054525969}
-  - component: {fileID: 2054525968}
   m_Layer: 5
   m_Name: Health (4)
   m_TagString: Untagged
@@ -86219,25 +86203,11 @@ RectTransform:
   m_Father: {fileID: 1828683327}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 906, y: 29}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -87.599976, y: 29}
   m_SizeDelta: {x: 224.5022, y: 56.1255}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2054525968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2054525966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b609534a3adc90478ca6c0d13d5bd32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 1538068531}
-  health: {fileID: 1857506137}
 --- !u!114 &2054525969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86414,17 +86384,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88067fe9f428b6b429a3d7462b1f5100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponRange: 6
+  weaponRange: 15
   target: {fileID: 1857506136}
   muzzleFlash: {fileID: 178134958}
-  gun: {fileID: 0}
-  range: 500
+  range: 10
   damage: 1
   hitEffect: {fileID: 1766814854480755888, guid: c0afdbdb1803a3242974df91a270faed,
     type: 3}
   shooting: {fileID: 8300000, guid: cdc13772333c96b468dfe6fb7d898673, type: 3}
   fpsCamera: {fileID: 0}
-  shootingRange: 10
+  shootingRange: 5
   targetPlayer: {fileID: 1857506137}
 --- !u!195 &2055880506
 NavMeshAgent:
@@ -86489,6 +86458,7 @@ MonoBehaviour:
   WayPointDwellTime: 3
   WayPointTolerence: 1
   patrolPath: {fileID: 2055880502}
+  enemies: []
 --- !u!54 &2055880510
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -117027,7 +116997,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6313937435671173371}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -16.33, y: -1.508, z: 87.679}
+  m_LocalPosition: {x: -1.51, y: -1.508, z: 70.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -117118,10 +117088,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d988c3ed3f207ae419fd55794e8b8889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseDistance: 15
+  chaseDistance: 10
   WayPointDwellTime: 3
   WayPointTolerence: 1
   patrolPath: {fileID: 6313937435671173384}
+  enemies: []
 --- !u!114 &6313937435671173373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117184,14 +117155,13 @@ MonoBehaviour:
   weaponRange: 6
   target: {fileID: 1857506136}
   muzzleFlash: {fileID: 6738091714010378407}
-  gun: {fileID: 919132147902741935}
-  range: 500
+  range: 10
   damage: 1
   hitEffect: {fileID: 1766814854480755888, guid: c0afdbdb1803a3242974df91a270faed,
     type: 3}
   shooting: {fileID: 8300000, guid: cdc13772333c96b468dfe6fb7d898673, type: 3}
   fpsCamera: {fileID: 1581997405548593659}
-  shootingRange: 10
+  shootingRange: 5
   targetPlayer: {fileID: 1857506137}
 --- !u!114 &6313937435671173382
 MonoBehaviour:

@@ -12,7 +12,6 @@ namespace RPG.Combat
         [SerializeField] float weaponRange = 2f;
         [SerializeField] Transform target;
         [SerializeField] ParticleSystem muzzleFlash;
-        [SerializeField] GameObject gun;
         [SerializeField] float range;
         [SerializeField] float damage;
         [SerializeField] GameObject hitEffect;
@@ -44,29 +43,31 @@ namespace RPG.Combat
 
             LookAtPlayer();
 
-            if (this.health.IsDead())
-            {
-                gun.SetActive(false);
-            }
-
             if (target == null) return;
 
             if (!GetIsInRange())
             {
 
                 GetComponent<Mover>().MoveTo(target.position);
-                AttackBehaviour();
-
 
             }
 
             else
             {
                 GetComponent<Mover>().Cancel();
+
+                if (health.IsDead())
+                {
+                    StopCoroutine(trigger);
+
+                }
+
+                else
+                {
+                    AttackBehaviour();
+                }
+
             }
-
-
-
         }
 
         private void LookAtPlayer()
@@ -85,7 +86,7 @@ namespace RPG.Combat
 
         }
 
-        private bool StartAttacking()
+        private bool AttackingRange()
         {
 
             return Vector3.Distance(transform.position, target.position) < shootingRange;
@@ -105,7 +106,6 @@ namespace RPG.Combat
 
             if (running == false)
             {
-                Debug.Log("Started");
                 trigger = StartCoroutine(TriggerAttack());
             }
 
@@ -130,7 +130,6 @@ namespace RPG.Combat
 
             running = false;
 
-            Debug.Log("Ended");
         }
 
 
@@ -145,7 +144,6 @@ namespace RPG.Combat
             RaycastHit hit;
             if (Physics.Raycast(this.transform.position, this.transform.forward, out hit, range))
             {
-                Debug.Log("I hit this thing: " + hit.transform.name);
 
                 targetPlayer = hit.transform.GetComponent<Health>();
                 if (targetPlayer == null) return;

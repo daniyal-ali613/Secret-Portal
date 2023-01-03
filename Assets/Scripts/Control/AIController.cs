@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using RPG.Combat;
 using RPG.Core;
 using RPG.Movement;
@@ -15,6 +17,8 @@ namespace RPG.Control
         [SerializeField] float WayPointDwellTime = 3f;
         [SerializeField] float WayPointTolerence = 1f;
         [SerializeField] PatrolPath patrolPath;
+        [SerializeField] List<GameObject> enemies = new List<GameObject>();
+        int enemyCounter;
         NavMeshAgent navMeshAgent;
         Fighter fighter;
         Health health;
@@ -33,6 +37,7 @@ namespace RPG.Control
             guardPosition = transform.position;
             mover = GetComponent<Mover>();
             navMeshAgent = GetComponent<NavMeshAgent>();
+            enemyCounter = 0;
         }
 
 
@@ -54,9 +59,15 @@ namespace RPG.Control
             if (health.IsDead())
             {
                 GetComponent<Rigidbody>().isKinematic = true;
+                enemyCounter++;
             }
 
             UpdateTimers();
+
+            if (enemyCounter >= enemies.Count)
+            {
+                StartCoroutine(SceneChange());
+            }
         }
 
         private void UpdateTimers()
@@ -119,6 +130,12 @@ namespace RPG.Control
         private void AttackBehaviour()
         {
             fighter.Attack(player);
+        }
+
+        IEnumerator SceneChange()
+        {
+            yield return new WaitForSeconds(2);
+
         }
 
     }
