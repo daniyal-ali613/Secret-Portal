@@ -14,6 +14,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] AmmoType ammoType;
     [SerializeField] AudioClip shooting;
 
+
     void Update()
     {
         if (Input.GetButtonDown("Fire1"))
@@ -25,13 +26,12 @@ public class Weapon : MonoBehaviour
 
     private void Shoot()
     {
-        if (ammoSlot.GetCurrentAmmo(ammoType) > 0)
-        {
 
-            PlayMuzzleFlash();
-            Process();
-            ammoSlot.ReduceCurrentAmmo(ammoType);
-        }
+
+        PlayMuzzleFlash();
+        Process();
+        ammoSlot.ReduceCurrentAmmo(ammoType);
+
     }
 
     private void PlayMuzzleFlash()
@@ -53,6 +53,7 @@ public class Weapon : MonoBehaviour
             Health target = hit.transform.GetComponent<Health>();
             if (target == null) return;
             target.EnemyTakeDamage(damage);
+            target.GetComponent<Animator>().SetTrigger("damage");
         }
 
         else

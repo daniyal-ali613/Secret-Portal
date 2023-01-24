@@ -20838,7 +20838,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c36ccfd3b2ac8fe45b61ae26e69590f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1857506136}
 --- !u!114 &1675757425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20957,6 +20956,7 @@ MonoBehaviour:
   damage: 0
   punchSound: {fileID: 8300000, guid: c46cd439812a922409faa548db59dee2, type: 3}
   hurtSound: {fileID: 8300000, guid: 338a80a97ee41184ab44bd83d081a65d, type: 3}
+  runSound: {fileID: 8300000, guid: 334915c9c17bb7a4b9a2bed2c40128f4, type: 3}
   playerAnimator: {fileID: 4653117025796529434}
   targetPlayer: {fileID: 1857506137}
 --- !u!114 &1675757433
@@ -25868,6 +25868,7 @@ MonoBehaviour:
     BackwardSpeed: 10
     StrafeSpeed: 8
     RunMultiplier: 4
+    footSteps: {fileID: 0}
     RunKey: 304
     JumpForce: 50
     SlopeCurveModifier:

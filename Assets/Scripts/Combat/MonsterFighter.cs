@@ -15,6 +15,7 @@ namespace RPG.Combat
         [SerializeField] float damage;
         [SerializeField] AudioClip punchSound;
         [SerializeField] AudioClip hurtSound;
+        [SerializeField] AudioClip runSound;
         public Animator playerAnimator;
         LightingSettings settings;
         Animator animator;
@@ -121,6 +122,11 @@ namespace RPG.Combat
                 collided = false;
             }
 
+        }
+
+        public void OnRun()
+        {
+            AudioSource.PlayClipAtPoint(runSound, Camera.main.transform.position);
         }
     }
 

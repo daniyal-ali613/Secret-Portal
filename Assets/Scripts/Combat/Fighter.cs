@@ -18,6 +18,13 @@ namespace RPG.Combat
         [SerializeField] AudioClip shooting;
         [SerializeField] Camera fpsCamera;
 
+        [SerializeField] GameObject weapon;
+
+        public float rotationSpeed = 10f;
+        public float minimumAngle = -30f;
+        public float maximumAngle = 30f;
+
+
 
         [SerializeField] float shootingRange;
         Coroutine trigger;
@@ -36,6 +43,7 @@ namespace RPG.Combat
             health = GetComponent<Health>();
             check = false;
             running = false;
+
         }
 
         void Update()
@@ -52,30 +60,30 @@ namespace RPG.Combat
 
             }
 
-            else
-            {
-                GetComponent<Mover>().Cancel();
+            OnPlayerVisibility();
 
-                if (health.IsDead())
-                {
-                    StopCoroutine(trigger);
-
-                }
-
-                else
-                {
-                    AttackBehaviour();
-                }
-
-            }
         }
 
         private void LookAtPlayer()
         {
-            if (Vector3.Distance(transform.position, target.position) > 3.0f)
-            {
-                transform.LookAt(target.transform);
-            }
+            Vector3 direction = (target.position - transform.position).normalized;
+            float angle = Vector3.Angle(direction, transform.forward);
+            angle = Mathf.Clamp(angle, minimumAngle, maximumAngle);
+
+
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+
+        }
+
+        public void WeaponIdle()
+        {
+            weapon.transform.localPosition = new Vector3(0.0599999987f, 1.48800004f, 0.379000008f);
+        }
+
+        public void WeaponMovement()
+        {
+            weapon.transform.localPosition = new Vector3(0.00100000005f, 1.39699996f, 0.558000028f);
 
         }
 
@@ -83,13 +91,6 @@ namespace RPG.Combat
         {
 
             return Vector3.Distance(transform.position, target.position) < weaponRange;
-
-        }
-
-        private bool AttackingRange()
-        {
-
-            return Vector3.Distance(transform.position, target.position) < shootingRange;
 
         }
 
@@ -108,11 +109,6 @@ namespace RPG.Combat
             {
                 trigger = StartCoroutine(TriggerAttack());
             }
-
-        }
-
-        public void CombatMode()
-        {
 
         }
 
@@ -142,7 +138,7 @@ namespace RPG.Combat
         private void Process()
         {
             RaycastHit hit;
-            if (Physics.Raycast(this.transform.position, this.transform.forward, out hit, range))
+            if (Physics.Raycast(this.transform.position, this.transform.forward, out hit, shootingRange))
             {
 
                 targetPlayer = hit.transform.GetComponent<Health>();
@@ -170,7 +166,49 @@ namespace RPG.Combat
         {
             target = null;
         }
-    }
 
+        private void OnPlayerVisibility()
+        {
+
+            if (health.IsDead())
+            {
+                StopCoroutine(trigger);
+                GetComponent<Animator>().SetLayerWeight(1, 0);
+            }
+            if (target == null) return;
+
+            // check if the dot product of the direction to the player and the forward vector of the enemy is greater than 0
+            // if it is, then the player is within the field of view of the enemy
+            //Vector3 directionToPlayer = (target.position - transform.position).normalized;
+            //float dotProduct = Vector3.Dot(directionToPlayer, transform.forward);
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(transform.position, transform.forward, out hit, shootingRange))
+            {
+                // Player is in line of sight, start shooting
+
+                if (hit.collider.gameObject.transform == target)
+                {
+
+                    AttackBehaviour();
+
+                }
+            }
+            else
+            {
+                // Player is not in line of sight, stop shooting
+                if (trigger != null)
+                {
+                    running = false;
+                    StopCoroutine(trigger);
+                }
+            }
+
+        }
+    }
 }
+
+
+
 

@@ -5,6 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
+    [SerializeField] List<GameObject> enemies = new List<GameObject>();
+    int enemyCounter;
+
+    void Start()
+    {
+        enemyCounter = 0;
+
+    }
+
     public void RestartScene()
     {
         SceneManager.LoadScene(2);
@@ -27,6 +36,11 @@ public class LevelLoader : MonoBehaviour
         SceneManager.LoadScene(2);
     }
 
+    public void Add(int counter)
+    {
+        enemyCounter += counter;
+    }
+
     public void LoadCutScene()
     {
         SceneManager.LoadScene(3);
@@ -34,7 +48,30 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadCreditsScene()
     {
+        SceneManager.LoadScene(4);
+    }
+
+    public void LoadOptionsScene()
+    {
         SceneManager.LoadScene(1);
+    }
+
+    public void SceneChange()
+    {
+        StartCoroutine(LoadBossScene());
+    }
+
+    IEnumerator LoadBossScene()
+    {
+
+        Camera.main.clearFlags = CameraClearFlags.SolidColor;
+        Camera.main.backgroundColor = Color.black;
+
+        yield return new WaitForSeconds(2);
+
+        Camera.main.clearFlags = CameraClearFlags.Depth;
+        SceneManager.LoadScene(5);
+
     }
 
 }

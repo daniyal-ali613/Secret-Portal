@@ -12,7 +12,7 @@ namespace InventoryExample.UI
         // Start is called before the first frame update
         void Start()
         {
-            uiContainer.SetActive(true);
+            uiContainer.SetActive(false);
         }
 
         // Update is called once per frame

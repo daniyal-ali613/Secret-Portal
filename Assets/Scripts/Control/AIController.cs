@@ -14,20 +14,15 @@ namespace RPG.Control
     public class AIController : MonoBehaviour
     {
         [SerializeField] float chaseDistance = 5f;
-        [SerializeField] float WayPointDwellTime = 3f;
-        [SerializeField] float WayPointTolerence = 1f;
-        [SerializeField] PatrolPath patrolPath;
-        [SerializeField] List<GameObject> enemies = new List<GameObject>();
         int enemyCounter;
         NavMeshAgent navMeshAgent;
+
+        public LevelLoader level;
         Fighter fighter;
         Health health;
         GameObject player;
         Vector3 guardPosition;
         Mover mover;
-        int currentWayPointIndex = 0;
-
-        float timeSinceArrivedAtWayPoint = Mathf.Infinity;
 
         void Start()
         {
@@ -50,30 +45,21 @@ namespace RPG.Control
                 AttackBehaviour();
             }
 
-            else
-            {
-                PatrolBehaviour();
-            }
 
-
-            if (health.IsDead())
+            if (this.health.IsDead())
             {
                 GetComponent<Rigidbody>().isKinematic = true;
-                enemyCounter++;
+                level.GetComponent<LevelLoader>().Add(1);
             }
 
-            UpdateTimers();
 
-            if (enemyCounter >= enemies.Count)
+            if (enemyCounter >= 7)
             {
-                StartCoroutine(SceneChange());
+                FindObjectOfType<LevelLoader>().SceneChange();
             }
         }
 
-        private void UpdateTimers()
-        {
-            timeSinceArrivedAtWayPoint += Time.deltaTime;
-        }
+
 
         private bool InAttackRangeOfPlayer()
         {
@@ -81,45 +67,6 @@ namespace RPG.Control
             return distanceToPlayer < chaseDistance;
         }
 
-
-
-        private void PatrolBehaviour()
-        {
-            Vector3 nextPosition = guardPosition;
-
-            if (patrolPath != null)
-            {
-                if (AtWayPoint())
-                {
-
-                    timeSinceArrivedAtWayPoint = 0;
-                    CycleWayPoint();
-                }
-
-                nextPosition = GetCurrentWayPoint();
-            }
-
-            if (timeSinceArrivedAtWayPoint > WayPointDwellTime)
-            {
-                mover.StartMoveAction(nextPosition);
-            }
-        }
-
-        private bool AtWayPoint()
-        {
-            float distanceToWayPoint = Vector3.Distance(transform.position, GetCurrentWayPoint());
-            return distanceToWayPoint < WayPointTolerence;
-        }
-
-        private void CycleWayPoint()
-        {
-            currentWayPointIndex = patrolPath.GetNextIndex(currentWayPointIndex);
-        }
-
-        private Vector3 GetCurrentWayPoint()
-        {
-            return patrolPath.GetWaypoint(currentWayPointIndex);
-        }
 
         private void OnDrawGizmosSelected()
         {
@@ -130,12 +77,6 @@ namespace RPG.Control
         private void AttackBehaviour()
         {
             fighter.Attack(player);
-        }
-
-        IEnumerator SceneChange()
-        {
-            yield return new WaitForSeconds(2);
-
         }
 
     }

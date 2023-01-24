@@ -8,6 +8,7 @@ public class ItemPickUp : MonoBehaviour
 {
     public float PickUpRadius = 1f;
     public InventoryItemData ItemData;
+    public AudioClip pickUpSound;
 
     private SphereCollider myCollider;
 
@@ -32,7 +33,13 @@ public class ItemPickUp : MonoBehaviour
 
         if (inventory.InventorySystem.AddToInventory(ItemData, 1))
         {
+            AudioSource.PlayClipAtPoint(pickUpSound, Camera.main.transform.position);
             Destroy(this.gameObject);
         }
+    }
+
+    void Update()
+    {
+        transform.Rotate(new Vector3(0, 0, 20f) * Time.deltaTime);
     }
 }
