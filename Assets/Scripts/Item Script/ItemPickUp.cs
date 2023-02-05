@@ -3,24 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SphereCollider))]
 public class ItemPickUp : MonoBehaviour
 {
     public float PickUpRadius = 1f;
     public InventoryItemData ItemData;
     public AudioClip pickUpSound;
 
-    private SphereCollider myCollider;
+    public SphereCollider myCollider;
 
     private void Awake()
     {
-        myCollider = GetComponent<SphereCollider>();
-        myCollider.isTrigger = true;
-        myCollider.radius = PickUpRadius;
         if (!ItemData)
         {
             ItemData = ScriptableObject.CreateInstance<InventoryItemData>();
-            ItemData.WeaponType = this.gameObject.name;
+            ItemData.WeaponType = this.gameObject.transform.GetChild(0).name;
 
         }
     }

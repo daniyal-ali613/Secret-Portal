@@ -10,11 +10,16 @@ namespace RPG.Core
         public GameObject weapon;
 
         private Health health;
+
+        Rigidbody weaponRigidbody;
+
         float timer;
 
         private void Start()
         {
             health = GetComponent<Health>();
+            weaponRigidbody = weapon.GetComponent<Rigidbody>();
+
         }
 
         private void Update()
@@ -33,18 +38,17 @@ namespace RPG.Core
             weapon.transform.parent = null;
 
 
-            // Add physics to the weapon object
-            weapon.AddComponent<Rigidbody>();
-
-            // Apply force to the weapon object so it falls to the floor
-            weapon.GetComponent<Rigidbody>().AddForce(Vector3.down * 5f * Time.deltaTime, ForceMode.Impulse);
-
-            if (timer > 1f)
+            if (!weaponRigidbody)
             {
-                weapon.GetComponent<Rigidbody>().isKinematic = true;
-
+                weaponRigidbody = weapon.AddComponent<Rigidbody>();
             }
+
+            weaponRigidbody.velocity = Vector3.down * 10f;
+
         }
+
+
+
     }
 }
 

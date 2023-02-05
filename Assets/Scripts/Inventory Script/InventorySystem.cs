@@ -32,13 +32,16 @@ public class InventorySystem
             if (itemToAdd.WeaponType.Equals("arm4"))
             {
                 itemToAdd.Icon = Resources.Load<Sprite>("arm4");
-            }else if (itemToAdd.WeaponType.Equals("Futuristic_Weapon_Lowpoly74_2"))
+            }
+            else if (itemToAdd.WeaponType.Equals("Futuristic_Weapon_Lowpoly74_2"))
             {
                 itemToAdd.Icon = Resources.Load<Sprite>("Futuristic_Weapon_Lowpoly74_2");
-            }else if (itemToAdd.WeaponType.Equals("sniper"))
+            }
+            else if (itemToAdd.WeaponType.Equals("sniper"))
             {
                 itemToAdd.Icon = Resources.Load<Sprite>("sniper");
-            }else if (itemToAdd.WeaponType.Equals("untitled"))
+            }
+            else if (itemToAdd.WeaponType.Equals("untitled"))
             {
                 itemToAdd.Icon = Resources.Load<Sprite>("untitled");
             }
@@ -47,7 +50,7 @@ public class InventorySystem
                 itemToAdd.Icon = Resources.Load<Sprite>("temp_AK47");
             }
         }
-        
+
         if (ContainsItem(itemToAdd, out List<InventorySlot> invSlot))
         {
             foreach (var slot in invSlot)
@@ -59,7 +62,7 @@ public class InventorySystem
                     return true;
                 }
             }
-            
+
         }
         if (HasFreeSlot(out InventorySlot freeSlot))
         {
@@ -70,7 +73,7 @@ public class InventorySystem
 
         return false;
     }
-    
+
     //drop this weapon, return first valid weapon
     public int dropThisWeapon(int currentWeapon)
     {

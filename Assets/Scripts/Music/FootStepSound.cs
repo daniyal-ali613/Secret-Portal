@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RPG.Core;
 
 public class FootStepSound : MonoBehaviour
 {
-    AudioSource source;
+    public AudioSource source;
+    public AudioSource breathing;
+
+    Health health;
+
     private bool hasStarted = false;
 
 
@@ -19,31 +24,67 @@ public class FootStepSound : MonoBehaviour
 
         source = GetComponent<AudioSource>();
         rigid = GetComponent<Rigidbody>();
+        health = GetComponent<Health>();
 
     }
 
 
     void Update()
     {
+        FootSound();
+        breathingSound();
+    }
 
-        speed = rigid.velocity.magnitude;
 
-        if (speed > 0.1)
+    private void FootSound()
+    {
+        if (health.IsDead()) return;
+
+        else
         {
-            if (!hasStarted)
+            speed = rigid.velocity.magnitude;
+
+
+            if (speed > 0.1)
             {
-                source.Play();
-                hasStarted = true;
+                if (!hasStarted)
+                {
+                    source.Play();
+                    hasStarted = true;
+                }
             }
-        }
 
-        if (speed < 0.1)
+            if (speed < 0.1 || health.IsDead())
+            {
+                source.Stop();
+                hasStarted = false;
+
+            }
+
+        }
+    }
+
+    private void breathingSound()
+    {
+
+        if (health.GetHealth() <= 30)
         {
-            source.Stop();
-            hasStarted = false;
+            if (!breathing.isPlaying)
+            {
+
+                breathing.Play();
+                //Camera.main.GetComponent<Dizziness>().StartDiziness();
+
+            }
+
 
         }
 
-        Debug.Log(speed);
+        if (health.GetHealth() >= 30 || health.IsDead())
+        {
+
+            breathing.Stop();
+
+        }
     }
 }

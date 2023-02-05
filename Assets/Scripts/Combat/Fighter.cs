@@ -17,7 +17,6 @@ namespace RPG.Combat
         [SerializeField] GameObject hitEffect;
         [SerializeField] AudioClip shooting;
         [SerializeField] Camera fpsCamera;
-
         [SerializeField] GameObject weapon;
 
         public float rotationSpeed = 10f;
@@ -34,8 +33,12 @@ namespace RPG.Combat
         Health health;
         Vector3 distanceToPlayer;
 
+        LevelLoader level;
+
+
 
         bool running;
+        bool looking;
 
 
         void Start()
@@ -43,29 +46,37 @@ namespace RPG.Combat
             health = GetComponent<Health>();
             check = false;
             running = false;
+            level = FindObjectOfType<LevelLoader>();
+            looking = true;
+            Time.timeScale = 1;
 
         }
 
         void Update()
         {
-
-            LookAtPlayer();
-
             if (target == null) return;
 
-            if (!GetIsInRange())
+
+
+            if (GetIsInRange())
             {
 
                 GetComponent<Mover>().MoveTo(target.position);
+                if (looking == true)
+                {
+                    LookAtPlayer();
+                }
+
+                OnPlayerVisibility();
 
             }
 
-            OnPlayerVisibility();
 
         }
 
         private void LookAtPlayer()
         {
+
             Vector3 direction = (target.position - transform.position).normalized;
             float angle = Vector3.Angle(direction, transform.forward);
             angle = Mathf.Clamp(angle, minimumAngle, maximumAngle);
@@ -173,8 +184,11 @@ namespace RPG.Combat
             if (health.IsDead())
             {
                 StopCoroutine(trigger);
-                GetComponent<Animator>().SetLayerWeight(1, 0);
+                GetComponent<Collider>().enabled = false;
+                target = null;
+                looking = false;
             }
+
             if (target == null) return;
 
             // check if the dot product of the direction to the player and the forward vector of the enemy is greater than 0

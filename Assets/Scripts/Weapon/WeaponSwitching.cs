@@ -23,9 +23,9 @@ public class WeaponSwitching : MonoBehaviour
         currentWeaponName = currentWeaponData.WeaponType;
 
         int weaponIndex = 0;
-        foreach(Transform weapon in transform)
+        foreach (Transform weapon in transform)
         {
-            if(weapon.name == currentWeaponName)
+            if (weapon.name == currentWeaponName)
             {
                 weapon.gameObject.SetActive(true);
             }
@@ -33,11 +33,11 @@ public class WeaponSwitching : MonoBehaviour
             {
                 weapon.gameObject.SetActive(false);
             }
-        
+
             weaponIndex++;
         }
-        
-        
+
+
 
     }
 
@@ -49,11 +49,11 @@ public class WeaponSwitching : MonoBehaviour
         ProcessKeyInput();
         ProcessScrollWheelInput();
 
-        if(previousWeapon != currentWeapon)
+        if (previousWeapon != currentWeapon)
         {
             SetWeaponActive();
         }
-        
+
     }
 
     private void ProcessScrollWheelInput()
@@ -140,13 +140,20 @@ public class WeaponSwitching : MonoBehaviour
         {
             currentWeapon = 9;
         }
-        
+
         if (Input.GetKeyDown(KeyCode.G))
         {
             currentWeapon = inventoryHolder.dropCurrentWeapon(currentWeapon);
         }
-        
-        
+
+
+    }
+
+    public int GetWeaponValue()
+    {
+
+        return currentWeapon;
+
     }
 
 }

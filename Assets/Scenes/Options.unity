@@ -567,7 +567,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 330, y: 163.73799}
+  m_AnchoredPosition: {x: 330, y: 214}
   m_SizeDelta: {x: 670.09863, y: 73.0682}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &546299042
@@ -609,6 +609,10 @@ MonoBehaviour:
 
 
     I
+
+
+    Scroll
+    Wheel
 
 
 '
@@ -805,7 +809,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -60, y: 151.26971}
+  m_AnchoredPosition: {x: -60, y: 212}
   m_SizeDelta: {x: 670.09863, y: 73.0682}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &994438906
@@ -846,7 +850,11 @@ MonoBehaviour:
     Shoot
 
 
-    Inventory'
+    Inventory
+
+
+    Changing
+    guns'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7000a93add0ed5e45968326ed009072a, type: 2}
   m_sharedMaterial: {fileID: -6862667435977945572, guid: 7000a93add0ed5e45968326ed009072a,
@@ -1123,6 +1131,7 @@ GameObject:
   - component: {fileID: 1683762385}
   - component: {fileID: 1683762384}
   - component: {fileID: 1683762387}
+  - component: {fileID: 1683762388}
   m_Layer: 5
   m_Name: Back Button
   m_TagString: Untagged
@@ -1170,7 +1179,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1274,6 +1283,26 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!95 &1683762388
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683762382}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 42ea26c144c37b84ca64260b369bc170, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1855392298
 GameObject:
   m_ObjectHideFlags: 0

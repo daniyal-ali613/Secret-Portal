@@ -17,6 +17,7 @@ public class LevelManager : MonoBehaviour
         levelText.SetActive(false);
 
         StartCoroutine(levelStarter());
+
     }
     IEnumerator levelStarter()
     {
@@ -28,5 +29,6 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(3);
         levelText.SetActive(false);
         HealthBar.SetActive(true);
+
     }
 }

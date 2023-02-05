@@ -7,11 +7,18 @@ public class LevelLoader : MonoBehaviour
 {
     [SerializeField] List<GameObject> enemies = new List<GameObject>();
     int enemyCounter;
+    bool allDead;
 
     void Start()
     {
-        enemyCounter = 0;
-
+        allDead = false;
+    }
+    void Update()
+    {
+        if (allDead)
+        {
+            StartCoroutine(LoadBossScene());
+        }
     }
 
     public void RestartScene()
@@ -36,9 +43,16 @@ public class LevelLoader : MonoBehaviour
         SceneManager.LoadScene(2);
     }
 
-    public void Add(int counter)
+    public void RemoveEnemy(GameObject enemy)
     {
-        enemyCounter += counter;
+        enemies.Remove(enemy);
+
+        if (enemies.Count == 0)
+        {
+            allDead = true;
+
+        }
+
     }
 
     public void LoadCutScene()
@@ -56,6 +70,12 @@ public class LevelLoader : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+
+    public void LoadBoss()
+    {
+        SceneManager.LoadScene(5);
+    }
+
     public void SceneChange()
     {
         StartCoroutine(LoadBossScene());
@@ -67,11 +87,13 @@ public class LevelLoader : MonoBehaviour
         Camera.main.clearFlags = CameraClearFlags.SolidColor;
         Camera.main.backgroundColor = Color.black;
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForEndOfFrame();
+
+        yield return new WaitForSeconds(5);
+
 
         Camera.main.clearFlags = CameraClearFlags.Depth;
-        SceneManager.LoadScene(5);
-
+        LoadBossScene();
     }
 
 }

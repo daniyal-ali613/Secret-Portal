@@ -1,20 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class AmmoText : MonoBehaviour
 {
-    List<GameObject> weapons = new List<GameObject>();
+    public List<GameObject> weapons = new List<GameObject>();
+
+    int currentAmmount;
+
 
     void Update()
     {
+        DisplayText();
+    }
+
+    private void DisplayText()
+    {
+
         foreach (var weapon in weapons)
         {
-            if (weapon.activeInHierarchy == true)
-            {
 
-                //weapon.GetComponent<>().GetCurrentAmmo();
+            if (weapon.activeInHierarchy)
+            {
+                currentAmmount = weapon.GetComponent<Ammo>().GetCurrentAmmount();
+                GetComponent<TextMeshProUGUI>().text = currentAmmount.ToString();
             }
         }
+
     }
+
 }

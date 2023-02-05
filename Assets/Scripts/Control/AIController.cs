@@ -17,7 +17,6 @@ namespace RPG.Control
         int enemyCounter;
         NavMeshAgent navMeshAgent;
 
-        public LevelLoader level;
         Fighter fighter;
         Health health;
         GameObject player;
@@ -38,7 +37,6 @@ namespace RPG.Control
 
         private void Update()
         {
-            navMeshAgent.enabled = !health.IsDead();
 
             if (InAttackRangeOfPlayer() && fighter.CanAttack(player))
             {
@@ -49,7 +47,6 @@ namespace RPG.Control
             if (this.health.IsDead())
             {
                 GetComponent<Rigidbody>().isKinematic = true;
-                level.GetComponent<LevelLoader>().Add(1);
             }
 
 

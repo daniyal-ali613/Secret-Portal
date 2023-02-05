@@ -10,15 +10,18 @@ namespace RPG.Core
     public class Health : MonoBehaviour
     {
         [SerializeField] GameObject gameLostText;
-        float healthPoints = 100f;
+        [SerializeField] float healthPoints = 100f;
         bool isDead = false;
         float currentHealth;
         [SerializeField] float addition;
+
+        LevelLoader level;
 
 
         private void Awake()
         {
             addition = 10f;
+            level = FindObjectOfType<LevelLoader>();
         }
 
         private void Update()
@@ -48,9 +51,8 @@ namespace RPG.Core
             isDead = true;
             GetComponent<ActionSchedular>().CancelCurrentAction();
             GetComponent<Animator>().SetTrigger("Die");
+            level.RemoveEnemy(this.gameObject);
         }
-
-
 
 
         public void PlayerTakeDamage(float damage)

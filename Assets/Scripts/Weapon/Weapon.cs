@@ -10,27 +10,60 @@ public class Weapon : MonoBehaviour
     [SerializeField] float damage = 30f;
     [SerializeField] ParticleSystem muzzleFlash;
     [SerializeField] GameObject hitEffect;
-    [SerializeField] Ammo ammoSlot;
-    [SerializeField] AmmoType ammoType;
+    Ammo ammo;
     [SerializeField] AudioClip shooting;
+    [SerializeField] AudioClip empty;
+
+    private bool attacked;
+
+    GameObject health;
+
+
+
+
+    void Start()
+    {
+        ammo = GetComponent<Ammo>();
+        health = GameObject.FindGameObjectWithTag("Player");
+        attacked = false;
+    }
+
 
 
     void Update()
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            Shoot();
-            AudioSource.PlayClipAtPoint(shooting, Camera.main.transform.position);
+
+            if (ammo.GetCurrentAmmount() <= 0)
+            {
+                AudioSource.PlayClipAtPoint(empty, Camera.main.transform.position);
+            }
+
+            else
+            {
+                Shoot();
+                AudioSource.PlayClipAtPoint(shooting, Camera.main.transform.position);
+            }
+
         }
+
     }
 
     private void Shoot()
     {
 
+        if (health.GetComponent<Health>().IsDead()) return;
 
-        PlayMuzzleFlash();
-        Process();
-        ammoSlot.ReduceCurrentAmmo(ammoType);
+        else
+        {
+
+            PlayMuzzleFlash();
+            Process();
+            ammo.ReduceCurrentAmmo(1);
+
+        }
+
 
     }
 
@@ -44,8 +77,7 @@ public class Weapon : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(FPCamera.transform.position, FPCamera.transform.forward, out hit, range))
         {
-
-            Debug.Log("I hit this thing: " + hit.transform.name);
+            attacked = true;
 
             CreateHitImpact(hit);
 
@@ -53,7 +85,6 @@ public class Weapon : MonoBehaviour
             Health target = hit.transform.GetComponent<Health>();
             if (target == null) return;
             target.EnemyTakeDamage(damage);
-            target.GetComponent<Animator>().SetTrigger("damage");
         }
 
         else
@@ -67,5 +98,10 @@ public class Weapon : MonoBehaviour
     {
         GameObject impact = Instantiate(hitEffect, hit.transform.position, Quaternion.LookRotation(hit.normal));
         Destroy(impact, 0.1f);
+    }
+
+    public bool AttackIndicator()
+    {
+        return attacked;
     }
 }
