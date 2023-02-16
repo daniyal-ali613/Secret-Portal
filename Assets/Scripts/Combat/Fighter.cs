@@ -4,36 +4,50 @@ using RPG.Movement;
 using RPG.Core;
 using UnityEngine;
 using System;
+using UnityEngine.AI;
 
 namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IAction
     {
-        [SerializeField] float weaponRange = 2f;
-        [SerializeField] Transform target;
-        [SerializeField] ParticleSystem muzzleFlash;
-        [SerializeField] float range;
-        [SerializeField] float damage;
-        [SerializeField] GameObject hitEffect;
-        [SerializeField] AudioClip shooting;
-        [SerializeField] Camera fpsCamera;
-        [SerializeField] GameObject weapon;
+        public float weaponRange = 2f;
+        public Transform target;
+        public ParticleSystem muzzleFlash;
+        public float damage;
+        public AudioClip shooting;
+        public GameObject weapon;
+
 
         public float rotationSpeed = 10f;
         public float minimumAngle = -30f;
         public float maximumAngle = 30f;
 
+        private float currentDistance;
+
+        private Vector3 lastTargetPosition;
 
 
-        [SerializeField] float shootingRange;
+
+        public float shootingRange;
         Coroutine trigger;
         LightingSettings settings;
         bool check;
         public Health targetPlayer;
         Health health;
+
         Vector3 distanceToPlayer;
 
+        NavMeshAgent navMesh;
+
+        ActionSchedular actionSchedular;
+
+        Collider coll;
+
+        Mover mover;
+
         LevelLoader level;
+
+        private Animator animator;
 
 
 
@@ -48,8 +62,12 @@ namespace RPG.Combat
             running = false;
             level = FindObjectOfType<LevelLoader>();
             looking = true;
+            mover = GetComponent<Mover>();
             Time.timeScale = 1;
-
+            navMesh = GetComponent<NavMeshAgent>();
+            actionSchedular = GetComponent<ActionSchedular>();
+            coll = GetComponent<Collider>();
+            animator = GetComponent<Animator>();
         }
 
         void Update()
@@ -58,17 +76,30 @@ namespace RPG.Combat
 
 
 
-            if (GetIsInRange())
+            if (GetIsInRange() || health.CheckDamage() == true)
             {
-
-                GetComponent<Mover>().MoveTo(target.position);
-                if (looking == true)
+                if (!health.IsDead())
                 {
-                    LookAtPlayer();
+                    navMesh.enabled = true;
                 }
 
-                OnPlayerVisibility();
+                if (navMesh.enabled == true)
+                {
+                    mover.MoveTo(target.position);
+                    OnPlayerVisibility();
+                    if (looking == true && !navMesh.isStopped)
+                    {
+                        LookAtPlayer();
+                    }
+                }
 
+
+            }
+
+            else
+            {
+
+                navMesh.enabled = false;
             }
 
 
@@ -84,24 +115,19 @@ namespace RPG.Combat
 
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-
         }
 
-        public void WeaponIdle()
-        {
-            weapon.transform.localPosition = new Vector3(0.0599999987f, 1.48800004f, 0.379000008f);
-        }
 
-        public void WeaponMovement()
-        {
-            weapon.transform.localPosition = new Vector3(0.00100000005f, 1.39699996f, 0.558000028f);
-
-        }
 
         private bool GetIsInRange()
         {
 
-            return Vector3.Distance(transform.position, target.position) < weaponRange;
+            currentDistance = Vector3.Distance(transform.position, target.position);
+
+
+
+            return currentDistance < weaponRange;
+
 
         }
 
@@ -149,26 +175,19 @@ namespace RPG.Combat
         private void Process()
         {
             RaycastHit hit;
-            if (Physics.Raycast(this.transform.position, this.transform.forward, out hit, shootingRange))
-            {
+            bool raycastSuccess = Physics.Raycast(this.transform.position, this.transform.forward, out hit, shootingRange);
+            if (!raycastSuccess) return;
 
-                targetPlayer = hit.transform.GetComponent<Health>();
-                if (targetPlayer == null) return;
-                targetPlayer.PlayerTakeDamage(damage);
-            }
-
-            else
-
-            {
-                return;
-            }
+            targetPlayer = hit.transform.GetComponent<Health>();
+            if (targetPlayer == null) return;
+            targetPlayer.PlayerTakeDamage(damage);
         }
 
 
 
         public void Attack(GameObject combatTarget)
         {
-            GetComponent<ActionSchedular>().StartAction(this);
+            actionSchedular.StartAction(this);
             target = combatTarget.transform;
         }
 
@@ -183,18 +202,22 @@ namespace RPG.Combat
 
             if (health.IsDead())
             {
-                StopCoroutine(trigger);
-                GetComponent<Collider>().enabled = false;
+                animator.SetLayerWeight(1, 0);
+                if (trigger != null)
+                {
+                    StopCoroutine(trigger);
+
+                }
+
+                coll.enabled = false;
                 target = null;
                 looking = false;
+                navMesh.enabled = false;
             }
 
             if (target == null) return;
 
-            // check if the dot product of the direction to the player and the forward vector of the enemy is greater than 0
-            // if it is, then the player is within the field of view of the enemy
-            //Vector3 directionToPlayer = (target.position - transform.position).normalized;
-            //float dotProduct = Vector3.Dot(directionToPlayer, transform.forward);
+
 
             RaycastHit hit;
 
@@ -216,6 +239,12 @@ namespace RPG.Combat
                 {
                     running = false;
                     StopCoroutine(trigger);
+                }
+
+                else
+                {
+
+                    return;
                 }
             }
 

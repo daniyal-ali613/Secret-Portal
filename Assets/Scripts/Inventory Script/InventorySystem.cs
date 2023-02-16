@@ -15,6 +15,7 @@ public class InventorySystem
 
     public UnityAction<InventorySlot> OnInventorySlotChanged;
 
+
     public InventorySystem(int size)
     {
         inventorySlots = new List<InventorySlot>(size);
@@ -50,6 +51,7 @@ public class InventorySystem
                 itemToAdd.Icon = Resources.Load<Sprite>("temp_AK47");
             }
         }
+
 
         if (ContainsItem(itemToAdd, out List<InventorySlot> invSlot))
         {

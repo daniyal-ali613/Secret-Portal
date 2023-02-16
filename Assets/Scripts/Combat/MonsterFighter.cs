@@ -3,25 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using RPG.Movement;
 using RPG.Core;
+using UnityEngine.AI;
 
 
 namespace RPG.Combat
 {
     public class MonsterFighter : MonoBehaviour, IAction
     {
-        [SerializeField] float weaponRange = 2f;
-        [SerializeField] Transform target;
-        [SerializeField] float range;
-        [SerializeField] float damage;
-        [SerializeField] AudioClip punchSound;
-        [SerializeField] AudioClip hurtSound;
-        [SerializeField] AudioClip runSound;
+        public float weaponRange = 2f;
+        public Transform target;
+        public float range;
+        public float damage;
+        public AudioClip punchSound;
+        public AudioClip hurtSound;
+        public AudioClip runSound;
 
-        [SerializeField] AudioClip roar;
 
-        [SerializeField] float punchRange = 1f;
+        public AudioClip roar;
 
-        [SerializeField] GameObject again;
+        public float punchRange = 1f;
+
+        public GameObject again;
 
 
         public CameraShake cameraShake;
@@ -29,17 +31,23 @@ namespace RPG.Combat
         public float rotationSpeed = 10f;
         public float minimumAngle = -30f;
         public float maximumAngle = 30f;
-
         public Animator playerAnimator;
         LightingSettings settings;
         Animator animator;
         bool check;
         public Health targetPlayer;
+
+        public AudioSource background;
         Health health;
+
+        Collider coll;
+
+        NavMeshAgent navMesh;
 
         float timer;
 
         bool running;
+        bool looking;
 
 
         void Start()
@@ -50,6 +58,10 @@ namespace RPG.Combat
             check = false;
             running = false;
             Time.timeScale = 1;
+            coll = GetComponent<Collider>();
+            navMesh = GetComponent<NavMeshAgent>();
+            looking = true;
+            background.Stop();
         }
 
         void Update()
@@ -57,27 +69,34 @@ namespace RPG.Combat
 
             if (target == null) return;
 
+            CheckHealth();
+
             if (!GetIsInRange())
             {
-                GetComponent<Mover>().MoveTo(target.position);
+                if (navMesh.enabled == true)
+                {
+                    GetComponent<Mover>().MoveTo(target.position);
+
+                }
             }
 
             else
             {
                 if (!health.IsDead())
                 {
+                    GetComponent<Mover>().Cancel();
                     AttackBehaviour();
+                    navMesh.enabled = true;
                 }
 
-                else
-                {
-                    again.SetActive(true);
-                }
-
-                GetComponent<Mover>().Cancel();
             }
 
-            LookAtPlayer();
+            if (looking == true)
+            {
+                LookAtPlayer();
+
+            }
+
 
             timer += Time.deltaTime;
             if (timer >= 6)
@@ -85,6 +104,21 @@ namespace RPG.Combat
 
                 Roar();
             }
+        }
+
+        private void CheckHealth()
+        {
+            if (health.IsDead())
+            {
+                timer = 0;
+                coll.enabled = false;
+                navMesh.enabled = false;
+                looking = false;
+
+                StartCoroutine(Restart());
+
+            }
+
         }
 
         private void LookAtPlayer()
@@ -101,8 +135,12 @@ namespace RPG.Combat
 
         private void Roar()
         {
-            timer = 0;
-            AudioSource.PlayClipAtPoint(roar, Camera.main.transform.position);
+            if (!health.IsDead())
+            {
+                timer = 0;
+                AudioSource.PlayClipAtPoint(roar, Camera.main.transform.position);
+            }
+
         }
 
         private bool GetIsInRange()
@@ -154,6 +192,15 @@ namespace RPG.Combat
             AudioSource.PlayClipAtPoint(runSound, Camera.main.transform.position);
         }
 
+        IEnumerator Restart()
+        {
+
+            yield return new WaitForSeconds(2);
+            again.SetActive(true);
+            Time.timeScale = 0;
+            background.Play();
+
+        }
 
     }
 

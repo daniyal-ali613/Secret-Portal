@@ -20,7 +20,11 @@ public class WeaponSwitching : MonoBehaviour
         GameObject player = GameObject.FindGameObjectsWithTag("Player")[0];
         inventoryHolder = player.GetComponent<InventoryHolder>();
         currentWeaponData = inventoryHolder.getWeapon(currentWeapon);
-        currentWeaponName = currentWeaponData.WeaponType;
+
+        if (currentWeaponData != null)
+        {
+            currentWeaponName = currentWeaponData.WeaponType;
+        }
 
         int weaponIndex = 0;
         foreach (Transform weapon in transform)
@@ -146,13 +150,6 @@ public class WeaponSwitching : MonoBehaviour
             currentWeapon = inventoryHolder.dropCurrentWeapon(currentWeapon);
         }
 
-
-    }
-
-    public int GetWeaponValue()
-    {
-
-        return currentWeapon;
 
     }
 

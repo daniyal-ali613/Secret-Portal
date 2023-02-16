@@ -11,17 +11,21 @@ namespace RPG.Core
     {
         [SerializeField] GameObject gameLostText;
         [SerializeField] float healthPoints = 100f;
+
+        [SerializeField] AudioClip wooshSound;
         bool isDead = false;
         float currentHealth;
         [SerializeField] float addition;
 
         LevelLoader level;
+        bool getHit;
 
 
         private void Awake()
         {
             addition = 10f;
             level = FindObjectOfType<LevelLoader>();
+            this.getHit = false;
         }
 
         private void Update()
@@ -39,6 +43,12 @@ namespace RPG.Core
         public void EnemyTakeDamage(float damage)
         {
             this.healthPoints = Mathf.Max(this.healthPoints - damage, 0);
+
+            if (this.getHit != true)
+            {
+                this.getHit = true;
+            }
+
             if (this.healthPoints <= 0)
             {
                 EnemyDie();
@@ -76,6 +86,7 @@ namespace RPG.Core
             yield return new WaitForSeconds(1);
             gameLostText.SetActive(true);
             RenderSettings.ambientLight = Color.red;
+            AudioSource.PlayClipAtPoint(wooshSound, Camera.main.transform.position);
 
 
             Time.timeScale = 0;
@@ -86,8 +97,14 @@ namespace RPG.Core
             return healthPoints;
         }
 
-    }
+        public bool CheckDamage()
+        {
+            return this.getHit;
 
+        }
+
+
+    }
 }
 
 

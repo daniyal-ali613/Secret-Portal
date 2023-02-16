@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
-    [SerializeField] List<GameObject> enemies = new List<GameObject>();
+    public List<GameObject> enemies = new List<GameObject>();
     int enemyCounter;
     bool allDead;
 
@@ -93,7 +93,7 @@ public class LevelLoader : MonoBehaviour
 
 
         Camera.main.clearFlags = CameraClearFlags.Depth;
-        LoadBossScene();
+        LoadBoss();
     }
 
 }

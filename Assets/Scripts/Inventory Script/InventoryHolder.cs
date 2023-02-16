@@ -11,7 +11,7 @@ public class InventoryHolder : MonoBehaviour
     [SerializeField] protected InventorySystem inventorySystem;
 
     public InventorySystem InventorySystem => inventorySystem;
-    
+
     public static UnityAction<InventorySystem> OnDynamicInventoryDisplayRequested;
 
     private void Awake()
@@ -19,7 +19,7 @@ public class InventoryHolder : MonoBehaviour
         inventorySystem = new InventorySystem(inventorySize);
         InventoryItemData init_weapon_arm4 = ScriptableObject.CreateInstance<InventoryItemData>();
         init_weapon_arm4.WeaponType = "arm4";
-        inventorySystem.AddToInventory(init_weapon_arm4,1);
+        inventorySystem.AddToInventory(init_weapon_arm4, 1);
     }
 
     public InventoryItemData getWeapon(int i)

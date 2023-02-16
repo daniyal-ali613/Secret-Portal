@@ -15,8 +15,6 @@ namespace RPG.Control
     {
         [SerializeField] float chaseDistance = 5f;
         int enemyCounter;
-        NavMeshAgent navMeshAgent;
-
         Fighter fighter;
         Health health;
         GameObject player;
@@ -30,7 +28,6 @@ namespace RPG.Control
             health = GetComponent<Health>();
             guardPosition = transform.position;
             mover = GetComponent<Mover>();
-            navMeshAgent = GetComponent<NavMeshAgent>();
             enemyCounter = 0;
         }
 

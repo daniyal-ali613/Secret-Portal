@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using RPG.Core;
 using UnityEngine;
 
-namespace RPG.Combat{
-  [RequireComponent(typeof(Health))]
-
-public class Combat : MonoBehaviour
+namespace RPG.Combat
 {
-   
+    [RequireComponent(typeof(Health))]
 
-}
+    public class Combat : MonoBehaviour
+    {
+
+
+    }
 
 }
 
