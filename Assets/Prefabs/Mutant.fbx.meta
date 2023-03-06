@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 08eb1bf33b81c0e4996f6c05f291097f
 ModelImporter:
-  serializedVersion: 21300
+  serializedVersion: 22103
   internalIDToNameTable:
   - first:
       74: -203655887218126122
@@ -11,17 +11,17 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: mutant_M
-    second: {fileID: 2100000, guid: 134d8ea118d12174cb05602680773723, type: 2}
+    second: {fileID: 581593721317780123, guid: da8741a42d59db44cbc53664b3989360, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Mutant_diffuse
-    second: {fileID: 2800000, guid: 43293de5f0fcf914dbb0e62714294b7d, type: 3}
+    second: {fileID: 2800000, guid: 6e26a058251b15b4b9b5edb1a14c523f, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Mutant_normal
-    second: {fileID: 2800000, guid: fb634713e340fac4d85365db1c9dfedf, type: 3}
+    second: {fileID: 2800000, guid: 5a18008916265d24b8bb21fa62bec760, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -85,6 +85,7 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -317,6 +318,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 0
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 

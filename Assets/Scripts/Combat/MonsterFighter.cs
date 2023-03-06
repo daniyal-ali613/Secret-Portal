@@ -11,9 +11,12 @@ namespace RPG.Combat
     public class MonsterFighter : MonoBehaviour, IAction
     {
         public float weaponRange = 2f;
+
         public Transform target;
         public float range;
         public float damage;
+
+        public GameObject shoot;
         public AudioClip punchSound;
         public AudioClip hurtSound;
         public AudioClip runSound;
@@ -32,6 +35,8 @@ namespace RPG.Combat
         public float minimumAngle = -30f;
         public float maximumAngle = 30f;
         public Animator playerAnimator;
+
+        public GameObject mutantParticles;
         LightingSettings settings;
         Animator animator;
         bool check;
@@ -48,6 +53,11 @@ namespace RPG.Combat
 
         bool running;
         bool looking;
+        bool moving;
+
+        Rigidbody rb;
+
+        Quaternion lookRotation;
 
 
         void Start()
@@ -55,6 +65,7 @@ namespace RPG.Combat
             timer = 0;
             health = GetComponent<Health>();
             animator = GetComponent<Animator>();
+            rb = GetComponent<Rigidbody>();
             check = false;
             running = false;
             Time.timeScale = 1;
@@ -62,6 +73,7 @@ namespace RPG.Combat
             navMesh = GetComponent<NavMeshAgent>();
             looking = true;
             background.Stop();
+            moving = false;
         }
 
         void Update()
@@ -76,7 +88,7 @@ namespace RPG.Combat
                 if (navMesh.enabled == true)
                 {
                     GetComponent<Mover>().MoveTo(target.position);
-
+                    moving = true;
                 }
             }
 
@@ -84,6 +96,7 @@ namespace RPG.Combat
             {
                 if (!health.IsDead())
                 {
+                    moving = false;
                     GetComponent<Mover>().Cancel();
                     AttackBehaviour();
                     navMesh.enabled = true;
@@ -94,14 +107,12 @@ namespace RPG.Combat
             if (looking == true)
             {
                 LookAtPlayer();
-
             }
 
 
             timer += Time.deltaTime;
-            if (timer >= 6)
+            if (timer >= 6 && moving == true)
             {
-
                 Roar();
             }
         }
@@ -127,8 +138,7 @@ namespace RPG.Combat
             float angle = Vector3.Angle(direction, transform.forward);
             angle = Mathf.Clamp(angle, minimumAngle, maximumAngle);
 
-
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            lookRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
 
         }
@@ -138,10 +148,20 @@ namespace RPG.Combat
             if (!health.IsDead())
             {
                 timer = 0;
+
+                HitPlayer();
+
+
                 AudioSource.PlayClipAtPoint(roar, Camera.main.transform.position);
             }
 
         }
+
+        private void HitPlayer()
+        {
+            var hitEffect = Instantiate(mutantParticles, shoot.transform.position, transform.rotation = lookRotation);
+        }
+
 
         private bool GetIsInRange()
         {
@@ -176,7 +196,7 @@ namespace RPG.Combat
                 AudioSource.PlayClipAtPoint(punchSound, Camera.main.transform.position);
                 AudioSource.PlayClipAtPoint(hurtSound, Camera.main.transform.position);
                 cameraShake.TriggerShake();
-                target.GetComponent<Health>().PlayerTakeDamage(damage);
+                target.GetComponent<Health>().PlayerTakeDamage(damage, this.gameObject);
             }
 
         }

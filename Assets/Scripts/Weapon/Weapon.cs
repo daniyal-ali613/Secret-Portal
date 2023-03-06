@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using RPG.Core;
 
 public class Weapon : MonoBehaviour
@@ -9,14 +10,24 @@ public class Weapon : MonoBehaviour
     [SerializeField] float range = 100f;
     [SerializeField] float damage = 30f;
     [SerializeField] ParticleSystem muzzleFlash;
+    [SerializeField] int fireRate = 25;
+
+    [SerializeField] TrailRenderer laserTracer;
+
+    [SerializeField] Transform tracerOrigin;
     [SerializeField] GameObject hitEffect;
     Ammo ammo;
     [SerializeField] AudioClip shooting;
     [SerializeField] AudioClip empty;
 
+    float cameraDistanceOffset;
+
+    Ray ray;
+
     private bool attacked;
 
     GameObject health;
+    Animator animator;
 
 
 
@@ -26,6 +37,7 @@ public class Weapon : MonoBehaviour
         ammo = GetComponent<Ammo>();
         health = GameObject.FindGameObjectWithTag("Player");
         attacked = false;
+        animator = GetComponent<Animator>();
     }
 
 
@@ -44,9 +56,14 @@ public class Weapon : MonoBehaviour
             {
                 Shoot();
                 AudioSource.PlayClipAtPoint(shooting, Camera.main.transform.position);
+                animator.SetTrigger("shoot");
             }
 
         }
+
+        Debug.DrawRay(transform.position, transform.forward, Color.red, range);
+        cameraDistanceOffset = Vector3.Distance(FPCamera.transform.position, this.transform.position);
+
 
     }
 
@@ -75,9 +92,15 @@ public class Weapon : MonoBehaviour
     private void Process()
     {
         RaycastHit hit;
-        if (Physics.Raycast(FPCamera.transform.position, FPCamera.transform.forward, out hit, range))
+
+        if (Physics.Raycast(FPCamera.transform.position, FPCamera.transform.forward * cameraDistanceOffset, out hit, range))
         {
             attacked = true;
+
+            var tracer = Instantiate(laserTracer, FPCamera.transform.position, Quaternion.identity);
+            tracer.AddPosition(FPCamera.transform.position);
+
+            tracer.transform.position = hit.point;
 
             CreateHitImpact(hit);
 
@@ -88,10 +111,11 @@ public class Weapon : MonoBehaviour
         }
 
         else
-
         {
+
             return;
         }
+
     }
 
     private void CreateHitImpact(RaycastHit hit)

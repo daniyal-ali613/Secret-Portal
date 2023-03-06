@@ -38,14 +38,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             public void UpdateDesiredTargetSpeed(Vector2 input)
             {
                 if (input == Vector2.zero) return;
+
                 if (input.x > 0 || input.x < 0)
                 {
                     //strafe
                     CurrentTargetSpeed = StrafeSpeed;
-                    if (run == false)
-                    {
 
-                    }
 
 
                 }
@@ -54,10 +52,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 if (input.y < 0)
                 {
                     CurrentTargetSpeed = BackwardSpeed;
-                    if (run == false)
-                    {
 
-                    }
 
                 }
 
@@ -66,10 +61,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 {
                     //handled last as if strafing and moving forward at the same time forwards speed should take precedence
                     CurrentTargetSpeed = ForwardSpeed;
-                    if (run == false)
-                    {
 
-                    }
 
                 }
 

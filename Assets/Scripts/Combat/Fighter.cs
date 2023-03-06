@@ -11,6 +11,8 @@ namespace RPG.Combat
     public class Fighter : MonoBehaviour, IAction
     {
         public float weaponRange = 2f;
+
+        public TrailRenderer laserTracer;
         public Transform target;
         public ParticleSystem muzzleFlash;
         public float damage;
@@ -23,6 +25,7 @@ namespace RPG.Combat
         public float maximumAngle = 30f;
 
         private float currentDistance;
+        public GameObject shootingPoint;
 
         private Vector3 lastTargetPosition;
 
@@ -175,12 +178,17 @@ namespace RPG.Combat
         private void Process()
         {
             RaycastHit hit;
-            bool raycastSuccess = Physics.Raycast(this.transform.position, this.transform.forward, out hit, shootingRange);
+            bool raycastSuccess = Physics.Raycast(shootingPoint.transform.position, transform.forward, out hit, shootingRange);
             if (!raycastSuccess) return;
+
+            var tracer = Instantiate(laserTracer, shootingPoint.transform.position, Quaternion.identity);
+            tracer.AddPosition(shootingPoint.transform.position);
+            tracer.transform.position = hit.point;
+
 
             targetPlayer = hit.transform.GetComponent<Health>();
             if (targetPlayer == null) return;
-            targetPlayer.PlayerTakeDamage(damage);
+            targetPlayer.PlayerTakeDamage(damage, this.gameObject);
         }
 
 
@@ -221,7 +229,7 @@ namespace RPG.Combat
 
             RaycastHit hit;
 
-            if (Physics.Raycast(transform.position, transform.forward, out hit, shootingRange))
+            if (Physics.Raycast(shootingPoint.transform.position, transform.forward, out hit, shootingRange))
             {
                 // Player is in line of sight, start shooting
 
@@ -231,6 +239,7 @@ namespace RPG.Combat
                     AttackBehaviour();
 
                 }
+
             }
             else
             {
