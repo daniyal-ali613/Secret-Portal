@@ -10,12 +10,12 @@ namespace RPG.Core
         public float amplitude = 1.0f; // the amplitude of the motion
         public float speed = 1.0f; // the speed of the motion
         private Vector3 startPos;
-        GameObject player;
+        public Health playerHealth;
+
 
 
         void Start()
         {
-            player = GameObject.FindGameObjectWithTag("Player");
             startPos = transform.position;
         }
 
@@ -30,7 +30,7 @@ namespace RPG.Core
             if (other.gameObject.CompareTag("Player"))
             {
                 AudioSource.PlayClipAtPoint(pickUpSound, Camera.main.transform.position);
-                player.GetComponent<Health>().PlayerGotHealth();
+                playerHealth.PlayerGotHealth();
                 gameObject.SetActive(false);
             }
         }

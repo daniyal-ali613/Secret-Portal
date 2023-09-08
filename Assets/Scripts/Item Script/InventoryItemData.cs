@@ -11,8 +11,11 @@ public class InventoryItemData : ScriptableObject
     public int InventorySize;
     public string DisplayName;
     [TextArea(4, 4)] public string Description;
-    
+
     public int RemainAmmo = 0;
     public string WeaponType;
+
+    public string WeaponId;
+
 
 }

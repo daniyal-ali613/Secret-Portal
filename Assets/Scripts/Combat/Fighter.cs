@@ -54,6 +54,7 @@ namespace RPG.Combat
 
 
 
+
         bool running;
         bool looking;
 
@@ -77,8 +78,6 @@ namespace RPG.Combat
         {
             if (target == null) return;
 
-
-
             if (GetIsInRange() || health.CheckDamage() == true)
             {
                 if (!health.IsDead())
@@ -95,14 +94,13 @@ namespace RPG.Combat
                         LookAtPlayer();
                     }
                 }
-
-
             }
 
             else
             {
 
                 navMesh.enabled = false;
+                return;
             }
 
 
@@ -124,14 +122,9 @@ namespace RPG.Combat
 
         private bool GetIsInRange()
         {
-
+            if (target == null) return false;
             currentDistance = Vector3.Distance(transform.position, target.position);
-
-
-
             return currentDistance < weaponRange;
-
-
         }
 
         public bool CanAttack(GameObject combatTarget)
@@ -144,7 +137,6 @@ namespace RPG.Combat
 
         private void AttackBehaviour()
         {
-
             if (running == false)
             {
                 trigger = StartCoroutine(TriggerAttack());
@@ -158,7 +150,7 @@ namespace RPG.Combat
 
             do
             {
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.25f);
                 PlayMuzzleFlash();
                 Process();
 
@@ -172,7 +164,7 @@ namespace RPG.Combat
         private void PlayMuzzleFlash()
         {
             muzzleFlash.Play();
-            AudioSource.PlayClipAtPoint(shooting, Camera.main.transform.position, 0.25f);
+            AudioSource.PlayClipAtPoint(shooting, Camera.main.transform.position, 0.5f);
         }
 
         private void Process()
@@ -210,7 +202,6 @@ namespace RPG.Combat
 
             if (health.IsDead())
             {
-                animator.SetLayerWeight(1, 0);
                 if (trigger != null)
                 {
                     StopCoroutine(trigger);

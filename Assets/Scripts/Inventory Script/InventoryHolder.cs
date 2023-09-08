@@ -18,7 +18,7 @@ public class InventoryHolder : MonoBehaviour
     {
         inventorySystem = new InventorySystem(inventorySize);
         InventoryItemData init_weapon_arm4 = ScriptableObject.CreateInstance<InventoryItemData>();
-        init_weapon_arm4.WeaponType = "arm4";
+        init_weapon_arm4.WeaponId = "one";
         inventorySystem.AddToInventory(init_weapon_arm4, 1);
     }
 

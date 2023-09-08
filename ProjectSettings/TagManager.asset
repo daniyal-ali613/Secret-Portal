@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Shootable
   - Enemy
+  - Fire
+  - Ground
+  - bullet
   layers:
   - Default
   - TransparentFX
@@ -14,14 +17,14 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
+  - monsterLazer
   - Camera
   - Ground
   - Postprocessing
-  - 
-  - 
-  - 
-  - 
+  - Enemy
+  - HitEffect
+  - Light
+  - EnemyBullet
   - 
   - 
   - 

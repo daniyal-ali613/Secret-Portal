@@ -16,6 +16,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             public float BackwardSpeed = 4.0f;  // Speed when walking backwards
             public float StrafeSpeed = 4.0f;    // Speed when walking sideways
             public float RunMultiplier = 2.0f;   // Speed when sprinting
+            bool pause;
+
             MonoBehaviour coroutine;
 
             public AudioClip footSteps;
@@ -29,7 +31,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             private void Awake()
             {
                 run = false;
+                pause = false;
+
             }
+
 
 #if !MOBILE_INPUT
             private bool m_Running;

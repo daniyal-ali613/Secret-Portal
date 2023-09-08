@@ -14,7 +14,6 @@ namespace RPG.Control
     public class AIController : MonoBehaviour
     {
         [SerializeField] float chaseDistance = 5f;
-        int enemyCounter;
         Fighter fighter;
         Health health;
         GameObject player;
@@ -28,7 +27,6 @@ namespace RPG.Control
             health = GetComponent<Health>();
             guardPosition = transform.position;
             mover = GetComponent<Mover>();
-            enemyCounter = 0;
         }
 
 
@@ -44,12 +42,6 @@ namespace RPG.Control
             if (this.health.IsDead())
             {
                 GetComponent<Rigidbody>().isKinematic = true;
-            }
-
-
-            if (enemyCounter >= 7)
-            {
-                FindObjectOfType<LevelLoader>().SceneChange();
             }
         }
 

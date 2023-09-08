@@ -21,7 +21,7 @@ public class Draw_Inventory_Bar : MonoBehaviour
     {
         inventorySystem = GameObject.FindWithTag("Player").GetComponent<InventoryHolder>().InventorySystem;
         inventorySlots = inventorySystem.InventorySlots;
-        sprites = new List<Sprite>(4){null, null, null, null};
+        sprites = new List<Sprite>(4) { null, null, null, null };
         UpdateSprite();
     }
 
@@ -30,24 +30,26 @@ public class Draw_Inventory_Bar : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             currentWeapon = 1;
-        }else if (Input.GetKeyDown(KeyCode.Alpha2))
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             currentWeapon = 2;
-        }else if (Input.GetKeyDown(KeyCode.Alpha3))
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             currentWeapon = 3;
-        }else if (Input.GetKeyDown(KeyCode.Alpha4))
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             currentWeapon = 4;
         }
         UpdateSprite();
-        
+
     }
 
     private void UpdateSprite()
     {
-        Debug.Log("asdfasdf");
-        for (int i = 0; i < inventorySlots.Count;i++)
+        for (int i = 0; i < inventorySlots.Count; i++)
         {
             if (inventorySlots[i].ItemData == null)
             {
@@ -66,12 +68,12 @@ public class Draw_Inventory_Bar : MonoBehaviour
     private void UpdateSprite(int slot)
     {
         sprites[slot] = inventorySlots[slot].ItemData.Icon;
-        
+
     }
     public int GetCurrentWeapon()
     {
         return currentWeapon;
     }
 
-    
+
 }

@@ -11,24 +11,29 @@ namespace RPG.Core
     {
         [SerializeField] GameObject gameLostText;
         [SerializeField] float healthPoints = 100f;
-        DamageIndicator damageIndicator;
 
+        private CursorHandler cursorHandler;
+
+        DamageIndicator damageIndicator;
 
         [SerializeField] AudioClip wooshSound;
         bool isDead = false;
         float currentHealth;
-        [SerializeField] float addition;
 
-        LevelLoader level;
+        public LevelLoader level;
+
+        float addition;
+
         bool getHit;
 
 
         private void Awake()
         {
             addition = 10f;
-            level = FindObjectOfType<LevelLoader>();
             damageIndicator = FindObjectOfType<DamageIndicator>();
+            cursorHandler = FindObjectOfType<CursorHandler>();
             this.getHit = false;
+            addition = 30;
         }
 
         private void Update()
@@ -53,17 +58,18 @@ namespace RPG.Core
 
             if (this.healthPoints <= 0)
             {
+
                 EnemyDie();
             }
         }
 
         private void EnemyDie()
         {
+            level.GetComponent<LevelLoader>().RemoveEnemy(gameObject);
             if (isDead) return;
             isDead = true;
             GetComponent<ActionSchedular>().CancelCurrentAction();
             GetComponent<Animator>().SetTrigger("Die");
-            level.RemoveEnemy(this.gameObject);
         }
 
 
@@ -81,7 +87,8 @@ namespace RPG.Core
 
         public void PlayerGotHealth()
         {
-            this.healthPoints = this.healthPoints + addition;
+            healthPoints = Mathf.Clamp(healthPoints + addition, 0f, 100f);
+
         }
 
 
@@ -90,11 +97,10 @@ namespace RPG.Core
             if (isDead) yield return null;
             isDead = true;
             yield return new WaitForSeconds(1);
-            gameLostText.SetActive(true);
             RenderSettings.ambientLight = Color.red;
             AudioSource.PlayClipAtPoint(wooshSound, Camera.main.transform.position);
-
-
+            cursorHandler.UnLockCursor();
+            gameLostText.SetActive(true);
             Time.timeScale = 0;
         }
 

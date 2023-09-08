@@ -21,6 +21,8 @@ namespace RPG.Combat
         public AudioClip hurtSound;
         public AudioClip runSound;
 
+        public CursorHandler cursorHandler;
+
 
         public AudioClip roar;
 
@@ -125,6 +127,7 @@ namespace RPG.Combat
                 coll.enabled = false;
                 navMesh.enabled = false;
                 looking = false;
+                cursorHandler.UnLockCursor();
 
                 StartCoroutine(Restart());
 
@@ -192,7 +195,6 @@ namespace RPG.Combat
         {
             if (Vector3.Distance(transform.position, target.position) <= punchRange)
             {
-                playerAnimator.SetTrigger("hurt");
                 AudioSource.PlayClipAtPoint(punchSound, Camera.main.transform.position);
                 AudioSource.PlayClipAtPoint(hurtSound, Camera.main.transform.position);
                 cameraShake.TriggerShake();

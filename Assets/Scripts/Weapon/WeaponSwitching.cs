@@ -7,8 +7,10 @@ public class WeaponSwitching : MonoBehaviour
 {
     [SerializeField] int currentWeapon = 0;
     private InventoryItemData currentWeaponData;
-    private string currentWeaponName;
+    private string currentWeaponID;
     private InventoryHolder inventoryHolder;
+
+
 
     void Start()
     {
@@ -23,13 +25,15 @@ public class WeaponSwitching : MonoBehaviour
 
         if (currentWeaponData != null)
         {
-            currentWeaponName = currentWeaponData.WeaponType;
+            currentWeaponID = currentWeaponData.WeaponId;
         }
 
         int weaponIndex = 0;
         foreach (Transform weapon in transform)
         {
-            if (weapon.name == currentWeaponName)
+            Weapon weaponComponent = weapon.GetComponent<Weapon>();
+
+            if (weaponComponent.WeaponId == currentWeaponID)
             {
                 weapon.gameObject.SetActive(true);
             }

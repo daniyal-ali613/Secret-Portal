@@ -9,7 +9,6 @@ namespace RPG.GameInfo
     public class ScoreDisplay : MonoBehaviour
     {
         TextMeshProUGUI playerHealth;
-        [SerializeField] GameObject menu;
         public Health health;
         // Start is called before the first frame update
         void Start()
@@ -21,11 +20,6 @@ namespace RPG.GameInfo
         void Update()
         {
             playerHealth.text = health.GetHealth().ToString();
-
-            if (health.GetHealth() <= 0)
-            {
-                menu.SetActive(true);
-            }
         }
     }
 }

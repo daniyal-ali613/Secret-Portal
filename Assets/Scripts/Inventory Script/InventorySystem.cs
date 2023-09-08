@@ -30,19 +30,19 @@ public class InventorySystem
     {
         if (itemToAdd.Icon == null)
         {
-            if (itemToAdd.WeaponType.Equals("arm4"))
+            if (itemToAdd.WeaponId.Equals("one"))
             {
                 itemToAdd.Icon = Resources.Load<Sprite>("arm4");
             }
-            else if (itemToAdd.WeaponType.Equals("Futuristic_Weapon_Lowpoly74_2"))
+            else if (itemToAdd.WeaponId.Equals("two"))
             {
                 itemToAdd.Icon = Resources.Load<Sprite>("Futuristic_Weapon_Lowpoly74_2");
             }
-            else if (itemToAdd.WeaponType.Equals("sniper"))
+            else if (itemToAdd.WeaponId.Equals("three"))
             {
                 itemToAdd.Icon = Resources.Load<Sprite>("sniper");
             }
-            else if (itemToAdd.WeaponType.Equals("untitled"))
+            else if (itemToAdd.WeaponId.Equals("four"))
             {
                 itemToAdd.Icon = Resources.Load<Sprite>("untitled");
             }

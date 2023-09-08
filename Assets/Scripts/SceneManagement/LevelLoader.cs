@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
-    public List<GameObject> enemies = new List<GameObject>();
+    [SerializeField] List<GameObject> enemies = new List<GameObject>();
     int enemyCounter;
     bool allDead;
 
@@ -50,9 +50,7 @@ public class LevelLoader : MonoBehaviour
         if (enemies.Count == 0)
         {
             allDead = true;
-
         }
-
     }
 
     public void LoadCutScene()
@@ -70,13 +68,18 @@ public class LevelLoader : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
 
     public void LoadBoss()
     {
         SceneManager.LoadScene(5);
     }
 
-    public void SceneChange()
+    private void SceneChange()
     {
         StartCoroutine(LoadBossScene());
     }
@@ -84,16 +87,13 @@ public class LevelLoader : MonoBehaviour
     IEnumerator LoadBossScene()
     {
 
-        Camera.main.clearFlags = CameraClearFlags.SolidColor;
-        Camera.main.backgroundColor = Color.black;
-
-        yield return new WaitForEndOfFrame();
-
-        yield return new WaitForSeconds(5);
-
-
-        Camera.main.clearFlags = CameraClearFlags.Depth;
+        yield return new WaitForSeconds(3);
         LoadBoss();
+    }
+
+    public bool GetDeathStatus()
+    {
+        return allDead;
     }
 
 }

@@ -8,6 +8,8 @@ public class FootStepSound : MonoBehaviour
     public AudioSource source;
     public AudioSource breathing;
 
+    [SerializeField] Health monsterHealth;
+
     Health health;
 
     private bool hasStarted = false;
@@ -38,30 +40,25 @@ public class FootStepSound : MonoBehaviour
 
     private void FootSound()
     {
-        if (health.IsDead()) return;
+        speed = rigid.velocity.magnitude;
 
-        else
+
+        if (speed > 0.1)
         {
-            speed = rigid.velocity.magnitude;
-
-
-            if (speed > 0.1)
+            if (!hasStarted)
             {
-                if (!hasStarted)
-                {
-                    source.Play();
-                    hasStarted = true;
-                }
+                source.Play();
+                hasStarted = true;
             }
-
-            if (speed < 0.1 || health.IsDead())
-            {
-                source.Stop();
-                hasStarted = false;
-
-            }
-
         }
+
+        if (speed < 0.1 || Time.timeScale == 0)
+        {
+            source.Stop();
+            hasStarted = false;
+        }
+
+
     }
 
     private void breathingSound()
@@ -74,17 +71,18 @@ public class FootStepSound : MonoBehaviour
 
                 breathing.Play();
                 //Camera.main.GetComponent<Dizziness>().StartDiziness();
-
             }
 
 
         }
 
-        if (health.GetHealth() >= 30 || health.IsDead())
+        if (health.GetHealth() >= 30 || Time.timeScale == 0)
         {
-
             breathing.Stop();
-
         }
+
     }
+
 }
+
+
